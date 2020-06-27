@@ -39,6 +39,7 @@ def mold_baseline_vectors(annotations):
     senctences: list of vectors
         annotation information, as well as topics identified, but with context
     """
+    print('Running Model_Topics:mold_baseline_vectors')
     annotations = pd.DataFrame(annotations)
     annotations = annotations[['ball_handler', 'ball_defender', 'screen_setter', 'screen_defender']]
 
@@ -77,6 +78,7 @@ def mold_sentences(vectors):
     senctences: dict
         annotation information, as well as topics identified, but with context
     """
+    print('Running Model_Topics:mold_sentences')
     annotations = []
     vector_ids = vectors.keys()
     vectorizer = Binarizer()
@@ -139,6 +141,7 @@ def find_topics(sentences, annotations, exp_name, n_components=4):
     topics: dict
         annotation information, as well as topics identified
     """
+    print('Running Model_Topics:find_topics')
     vectors = []
 
     n_actions = sentences.shape[1] - 1
@@ -175,6 +178,7 @@ def find_topics(sentences, annotations, exp_name, n_components=4):
 
 
 if __name__ == '__main__':
+    print('Running Model_Topics:main')
     from pnr.data.constant import sportvu_dir, game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

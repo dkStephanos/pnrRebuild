@@ -24,7 +24,7 @@ from pnr.plots.plot import full_to_half_full, half_full_to_half, limit_to_half, 
 def plot_action(game, annotation, game_id, data_config):
     """
     """
-
+    print('Running Plot_Action_Cluster:plot_action')
     moments = []
     movement_data = game['events'][int(annotation['eid'])]['moments']
     for moment in movement_data:
@@ -72,6 +72,7 @@ def plot_actions(data_config, actions, action_id):
     annotations: pandas.DataFrame
         raw annotation information
     """
+    print('Running Plot_Action_Cluster:plot_actions')
     fig = plt.figure(figsize=(12, 11))
     plt.tick_params(labelbottom=False, labelleft=False)
     game_ids = actions['gameid'].drop_duplicates(inplace=False).values
@@ -97,6 +98,7 @@ def plot_actions(data_config, actions, action_id):
 
 
 if __name__ == '__main__':
+    print('Running Plot_Action_Cluster:main')
     from pnr.data.constant import sportvu_dir, game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

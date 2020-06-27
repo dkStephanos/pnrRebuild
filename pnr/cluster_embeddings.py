@@ -26,6 +26,7 @@ import pnr.config as CONFIG
 from pnr.plots.plot import plot_action
 
 def clean_data(data):
+    print('Running Cluster_Embeddings:clean_data')
     data = data[0]
     clean_data = []
     for projection in data['projections']:
@@ -47,6 +48,7 @@ def cluster_db(data):
     labels: np.array
         cluster identification for annotation
     """
+    print('Running Cluster_Embeddings:cluster_db')
     X = StandardScaler().fit_transform(data[:, :2])
 
     # #############################################################################
@@ -105,6 +107,7 @@ def cluster_kmeans(data, data_config):
     labels: np.array
         cluster identification for annotation
     """
+    print('Running Cluster_Embeddings:cluster_kmeans')
     n_clusters = data_config['n_clusters']
     n_init = data_config['n_init']
 
@@ -129,6 +132,7 @@ def vis_labels(annotations, data_config):
         configuration for annotations
 
     """
+    print('Running Cluster_Embeddings:vis_labels')
     annotations = pd.DataFrame(annotations)
     annotations['gameid'] = '00' + annotations['gameid'].astype(int).astype(str).values
     action_types = annotations['label'].drop_duplicates(inplace=False).values
@@ -159,6 +163,7 @@ def make_vectors(annotations):
         information for a single annotation on the 4 roles and the 2 seperate actions they perform in a pnr
 
     """
+    print('Running Cluster_Embeddings:make_vectors')
     annotations = pd.DataFrame.from_records(annotations)
     unique_annotations = annotations[[
         'gameid',
@@ -188,6 +193,7 @@ def make_vectors(annotations):
 
 
 if __name__ == '__main__':
+    print('Running Cluster_Embeddings:main')
     from pnr.data.constant import sportvu_dir, game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

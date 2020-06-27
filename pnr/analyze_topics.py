@@ -22,6 +22,7 @@ def read_extended(dir_path, topics):
     """
     Get the extended set of annotations for evaluation
     """
+    print('Running Analyze_Topics:read_extended')
     all_raw_f = filter(lambda s: 'raw-' in s, os.listdir(dir_path))
     annotations = pd.DataFrame()
     topics = pd.DataFrame(topics)
@@ -57,6 +58,7 @@ def evaluate_topics(topics, annotations, data_config):
     Returns
     -------
     """
+    print('Running Analyze_Topics:evaluate_topics')
     topic_config = data_config['topics']
     topics['topic'] = topics['topic'].map(topic_config)
     topics = pd.get_dummies(topics['topic'])
@@ -72,6 +74,7 @@ def evaluate_topics(topics, annotations, data_config):
 
 
 if __name__ == '__main__':
+    print('Running Analyze_Topics:main')
     from pnr.data.constant import sportvu_dir, game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

@@ -35,6 +35,7 @@ import pandas as pd
 from sklearn.manifold import TSNE
 
 def embed(data_config, model_config, exp_name, fold_index, init_lr, max_iter, best_acc_delay):
+    print('Running Embed_Traj2Vec:embed')
     # hard code batch_size to 1 for writing embeddings
     data_config['batch_size'] = 1
     model_config['model_config']['batch_size'] = 1
@@ -77,6 +78,7 @@ def embed(data_config, model_config, exp_name, fold_index, init_lr, max_iter, be
     return embeddings
 
 def project_tf(embeddings):
+    print('Running Embed_Traj2Vec:project_tf')
     tf.reset_default_graph()
     sess = tf.InteractiveSession()
 
@@ -100,6 +102,7 @@ def project_tf(embeddings):
 
 
 if __name__ == '__main__':
+    print('Running Embed_Traj2Vec:main')
     from pnr.data.constant import game_dir, sportvu_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

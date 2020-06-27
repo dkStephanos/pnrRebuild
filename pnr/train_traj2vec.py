@@ -32,6 +32,7 @@ import numpy as np
 import os
 
 def train(data_config, model_config, exp_name, fold_index, init_lr, max_iter, best_acc_delay):
+    print('Running Train_Traj2Vec:train')
     loader = TrajectoryLoader(config=data_config, fold_index=fold_index)
 
     net = eval(model_config['class_name'])(model_config['model_config'])
@@ -125,6 +126,7 @@ def train(data_config, model_config, exp_name, fold_index, init_lr, max_iter, be
 
 
 if __name__ == '__main__':
+    print('Running Train_Traj2Vec:main')
     arguments = docopt(__doc__)
     print ("...Docopt... ")
     print(arguments)

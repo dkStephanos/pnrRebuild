@@ -13,6 +13,7 @@ def _hash(i):
 
 def merge_two_dicts(x, y):
     """Given two dicts, merge them into a new dict as a shallow copy."""
+    print('Running merge_two_dicts')
     z = x.copy()
     z.update(y)
     return z
@@ -23,6 +24,7 @@ def disentangle_train_val(train, val):
     Given annotations of train/val splits, make sure no overlapping Event
     -> for later detection testing
     """
+    print('Running disentangle_train_val')
     new_train = []
     new_val = []
     while len(val) > 0:
@@ -49,6 +51,7 @@ class BaseDataset:
     """
 
     def __init__(self, f_config, fold_index, load_raw=True, no_anno=False, game=None):
+        print('Running BaseDataset:init')
         # configuration
         self.fold_index = fold_index
         if type(f_config) == str:
@@ -133,6 +136,7 @@ class BaseDataset:
         self.ind = 0
 
     def _split(self, annotations, fold_index):
+        print('Running BaseDataset:_split')
         if self.config['data_config']['shuffle']:
             np.random.seed(self.config['randseed'])
             np.random.shuffle(annotations)
@@ -146,6 +150,7 @@ class BaseDataset:
         return train_annotations, val_annotations
 
     def _make_annotation_dict(self):
+        print('Running BaseDataset:init')
         self.annotation_dict = {}
         self.annotation_dict_eids = {}
         for anno in self.annotations:
@@ -162,6 +167,7 @@ class BaseDataset:
                 game[quarter_ind] = np.sort(game[quarter_ind])[::-1]
 
     def propose_positive_Ta(self, jitter=True, train=True, loop=False):
+        print('Running BaseDataset:propose_positive_Ta')
         if not loop:  # sampling from training annotations
             while True:
                 r_ind = np.random.randint(0, len(self.train_annotations))
@@ -202,6 +208,7 @@ class BaseDataset:
                     return ret
 
     def _make_annotation(self, gameid, quarter, gameclock, eid, tfr):
+        print('Running BaseDataset:_make_annotation')
         return {
             'gameid': gameid,
             'quarter': int(quarter),
@@ -212,6 +219,7 @@ class BaseDataset:
         }
 
     def propose_Ta(self):
+        print('Running BaseDataset:propose_Ta')
         while True:
             g_ind = np.random.randint(0, len(self.games))
             e_ind = np.random.randint(0, len(self.games[self.games.keys()[g_ind]]['events']))
@@ -233,6 +241,7 @@ class BaseDataset:
             )
 
     def propose_negative_Ta(self, train=True):
+        print('Running BaseDataset:propose_negative_Ta')
         ## make sure it's in the right split
         if train:
             annos = self.train_annotations + self.train_voids

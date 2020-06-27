@@ -17,6 +17,7 @@ from pnr.data.constant import game_dir
 
 class BaseLoader:
     def __init__(self, data_config, dataset, extractor, batch_size, mode='sample', fraction_positive=.5):
+        print('Running BaseLoader:init')
         self.data_config = data_config
         self.dataset = dataset
         self.extractor = extractor
@@ -27,6 +28,7 @@ class BaseLoader:
         self.games = self.dataset.games
 
     def next(self):
+        print('Running BaseLoader:next')
         """
         """
         if self.mode == 'sample':
@@ -37,6 +39,7 @@ class BaseLoader:
             raise Exception('unknown loader mode')
 
     def next_batch(self, extract=True, no_anno=False):
+        print('Running BaseLoader:next_batch')
         N_pos = int(self.fraction_positive * self.batch_size)
         N_neg = self.batch_size - N_pos
         ret_val = []
@@ -79,6 +82,7 @@ class BaseLoader:
             )
 
     def load_by_annotations(self, annotations, extract=True):
+        print('Running BaseLoader:load_by_annotations')
         """
         no labels returned
         """
@@ -107,6 +111,7 @@ class BaseLoader:
         return ret_val
 
     def load_split(self, split='val', extract=True, positive_only=False):
+        print('Running BaseLoader:load_split')
         N_pos = 0
         ret_val = []
         ret_labels = []
@@ -164,12 +169,15 @@ class BaseLoader:
         return np.array(ret_val), np.array(ret_labels)
 
     def load_train(self, extract=True, positive_only=False):
+        print('Running BaseLoader:load_train')
         return self.load_split(split='train', extract=extract, positive_only=positive_only)
 
     def load_valid(self, extract=True, positive_only=False):
+        print('Running BaseLoader:load_valid')
         return self.load_split(split='val', extract=extract, positive_only=positive_only)
 
     def _load_event(self, anno, extract, every_K_frame, dont_resolve_basket=False):
+        print('Running BaseLoader:_load_event')
         ret_val = []
         ret_gameclocks = []
         ret_frame_idx = []
@@ -212,6 +220,7 @@ class BaseLoader:
         return ret
 
     def load_split_event(self, split, extract, every_K_frame=4):
+        print('Running BaseLoader:load_split_event')
         if split == 'val':
             split_hash = self.dataset.val_hash
         elif split == 'train':
@@ -240,6 +249,7 @@ class BaseLoader:
         return ret
 
     def load_event(self, game_id, event_id, every_K_frame, player_id=None):
+        print('Running BaseLoader:load_event')
         o = self.extractor.augment
         self.extractor.augment = False
         anno = {"gameid": game_id, "eid": event_id}
@@ -254,6 +264,7 @@ class BaseLoader:
 class GameSequenceLoader:
     def __init__(self, dataset, extractor, batch_size, mode='sample',
                  fraction_positive=.5, negative_fraction_hard=0):
+        print('Running GameSequenceLoader:init')
         """
         """
         self.config = dataset.config
@@ -314,6 +325,7 @@ class GameSequenceLoader:
             self.hard_neg_ind = 0
 
     def _split(self, inds, fold_index=0):
+        print('Running GameSequenceLoader:_split')
         if self.config['data_config']['shuffle']:
             np.random.seed(self.config['randseed'])
             np.random.shuffle(inds)
@@ -325,6 +337,7 @@ class GameSequenceLoader:
         return train_inds, val_inds
 
     def next(self):
+        print('Running GameSequenceLoader:next')
         """
         """
         if self.mode == 'sample':
@@ -335,6 +348,7 @@ class GameSequenceLoader:
             raise Exception('unknown loader mode')
 
     def next_batch(self, extract=True):
+        print('Running GameSequenceLoader:next_batch')
         # if self.batch_index == self.dataset_size:
         #     return None
 
@@ -374,6 +388,7 @@ class GameSequenceLoader:
         return x, t
 
     def load_valid(self, extract=True):
+        print('Running GameSequenceLoader:load_valid')
         x = self.val_x
         if extract:
             x = self.extractor.extract_batch(x, input_is_sequence=True)
@@ -381,6 +396,7 @@ class GameSequenceLoader:
         return x, t
 
     def load_test(self, extract=True):
+        print('Running GameSequenceLoader:load_test')
         x, t = [], []
         for game in self.detect_validation:
             pos_x = np.load(os.path.join(self.root_dir, '%s_pos_x.npy' % game))
@@ -419,6 +435,7 @@ class GameSequenceLoader:
 
 class TrajectoryLoader:
     def __init__(self, config, fold_index):
+        print('Running TrajectoryLoader:init')
         """
         """
         pnr_dir = os.path.join(game_dir, 'pnr-annotations')
@@ -445,6 +462,7 @@ class TrajectoryLoader:
         self.train_x = self.x
 
     def _split(self, inds, fold_index=0):
+        print('Running TrajectoryLoader:_split')
         if self.config['data_config']['shuffle']:
             np.random.seed(self.config['randseed'])
             np.random.shuffle(inds)
@@ -456,9 +474,11 @@ class TrajectoryLoader:
         return train_inds, val_inds
 
     def next(self):
+        print('Running TrajectoryLoader:next')
         return self.next_batch()
 
     def next_batch(self):
+        print('Running TrajectoryLoader:next_batch')
         if self.ind + self.N >= self.train_x.shape[0]:
             self.ind = 0
             np.random.shuffle(self.train_x)
@@ -474,6 +494,7 @@ class TrajectoryLoader:
         return x
 
     def load_valid(self):
+        print('Running TrajectoryLoader:load_valid')
         if self.val_ind + self.batch_size > len(self.val_x):
             self.val_ind = 0
             return None
@@ -482,6 +503,7 @@ class TrajectoryLoader:
         return x
 
     def load_set(self):
+        print('Running TrajectoryLoader:load_set')
         if self.set_ind + self.batch_size > len(self.x):
             self.set_ind = 0
             return None
@@ -491,4 +513,5 @@ class TrajectoryLoader:
         return x, annotations
 
     def reset(self):
+        print('Running TrajectoryLoader:reset')
         self.batch_index = 0

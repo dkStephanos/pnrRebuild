@@ -29,6 +29,7 @@ class TimeoutException(Exception):
 
 @contextmanager
 def time_limit(seconds):
+    print('Running Make_Sequences_From_Games:time_limit')
     def signal_handler(signum, frame):
         raise TimeoutException("Timed out!")
     signal.signal(signal.SIGALRM, signal_handler)

@@ -21,6 +21,7 @@ from glob import glob
 
 
 if __name__ == '__main__':
+    print('Running Pkl_Games:main')
 	arguments = docopt(__doc__)
 	print ("...Docopt... ")
 	print(arguments)

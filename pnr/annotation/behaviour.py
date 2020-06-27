@@ -31,6 +31,7 @@ def convert_movement(movement):
 
 
 def convert_to_half(annotation_movements):
+    print('Running Annotation:convert_to_half')
     for anno_ind, annotation in enumerate(annotation_movements):
         for player_ind, player in enumerate(annotation['players']):
             for role, movement in player['movement']['before'].items():
@@ -44,6 +45,7 @@ def convert_to_half(annotation_movements):
 
 
 def create_trajectory(movement_dict, type):
+    print('Running Annotation:create_trajectory')
     trajectory = {}
     trajectory['players'] = {}
 
@@ -61,6 +63,7 @@ def create_trajectory(movement_dict, type):
     return trajectory
 
 def extract_trajectories(annotation_movements):
+    print('Running Annotation:extract_trajectories')
     trajectories = []
     annotations = []
 
@@ -93,6 +96,7 @@ def euclid_dist(location_1, location_2):
     """
     Get L2 distance to ball from shot location
     """
+    print('Running Annotation:euclid_dist')
     distance = (location_1-location_2)**2
     distance = distance.sum(axis=-1)
     distance = np.sqrt(distance)
@@ -119,6 +123,7 @@ def over_under(player, screen_loc, hoop):
     score: np.array
         over/under score
     """
+    print('Running Annotation:over_under')
     scores = []
     for loc in player:
         ba = loc - screen_loc
@@ -154,6 +159,7 @@ def over_under(player, screen_loc, hoop):
     return np.array(scores)
 
 def complete_trajectories(trajectories, annotations):
+    print('Running Annotation:complete_trajectories')
     completed_trajectories = []
     completed_annotations = []
 
@@ -210,6 +216,7 @@ def complete_trajectories(trajectories, annotations):
 
 
 def generate_behavior_sequences(features_trajectories):
+    print('Running Annotation:generate_behavior_sequences')
     behavior_sequences = []
 
     for trajectory_features in tqdm(features_trajectories):
@@ -224,6 +231,7 @@ def generate_behavior_sequences(features_trajectories):
 
 
 def generate_normal_behavior_sequence(behavior_sequences):
+    print('Running Annotation:generate_normal_behavior')
     behavior_sequences_normal = []
     templist = []
     for item in behavior_sequences:
@@ -245,6 +253,7 @@ def generate_normal_behavior_sequence(behavior_sequences):
     return behavior_sequences_normal
 
 def compute_features(completed_trajectories):
+    print('Running Annotation:compute_features')
     features_trajectories = []
     for trajectory in completed_trajectories:
         trajectory_features = []
@@ -275,6 +284,7 @@ def compute_features(completed_trajectories):
 
 
 def rolling_window(sample, window_size=10, offset=5):
+    print('Running Annotation:rolling_window')
     # TODO change window length and offset
     time_length = len(sample) # should be around 50
     window_length = int(time_length / window_size)
@@ -291,6 +301,7 @@ def rolling_window(sample, window_size=10, offset=5):
 
 
 def behavior_extract(windows):
+    print('Running Annotation:behavior_extract')
     behavior_sequence = []
     for window in windows:
         behaviour_feature = []
@@ -334,6 +345,7 @@ def get_behaviours(action_movements):
     behaviours: np.array
         behaviour vectors for each action identified
     """
+    print('Running Annotation:get_behaviours')
     # TODO cleanup
     action_movements = convert_to_half(action_movements)
     trajectories, annotations = extract_trajectories(action_movements)
@@ -357,6 +369,7 @@ def plot_pairwise_dist(action_movements):
     Returns
     -------
     """
+    print('Running Annotation:plot_pairwise_dist')
     action_movements = convert_to_half(action_movements)
     trajectories, annotations = extract_trajectories(action_movements)
 
@@ -434,7 +447,7 @@ def plot_pairwise_dist(action_movements):
 
 if __name__ == '__main__':
     from pnr.data.constant import game_dir
-
+    print('Running Annotation:behaviors--main')
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
     action_movements = pkl.load(open(os.path.join(pnr_dir, 'roles/trajectories.pkl'), 'rb'))
     # plot_pairwise_dist(action_movements)

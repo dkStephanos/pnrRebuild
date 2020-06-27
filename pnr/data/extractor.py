@@ -34,6 +34,7 @@ class BaseExtractor(object):
     """
 
     def __init__(self, f_config):
+        print('Running BaseExtractor:init')
         self.augment = True
         if type(f_config) == str:
             self.config = yaml.load(open(f_config, 'rb'))['extractor_config']
@@ -41,6 +42,7 @@ class BaseExtractor(object):
             self.config = f_config['extractor_config']
 
     def extract_raw(self, event, dont_resolve_basket=False):
+        print('Running BaseExtractor:extract_raw')
         """
         """
         ##
@@ -83,6 +85,7 @@ class BaseExtractor(object):
         return [ball, offense, defense]
 
     def extract_raw_pnr(self, event, one_hot=False):
+        print('Running BaseExtractor:extract_raw_pnr')
         """
         """
         ##
@@ -158,6 +161,7 @@ class BaseExtractor(object):
             ]
 
     def extract(self, event):
+        print('Running BaseExtractor:extract')
         sample_rate = 1
         Y_RANGE = 100
         X_RANGE = 50
@@ -205,6 +209,7 @@ class BaseExtractor(object):
             return cxy
 
     def extract_batch(self, events_arr, input_is_sequence=False, dont_resolve_basket=False):
+        print('Running BaseExtractor:extract_batch')
         sample_rate = 1
         Y_RANGE = 100
         X_RANGE = 50

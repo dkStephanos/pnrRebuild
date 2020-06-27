@@ -41,10 +41,12 @@ def gameclock_to_str(gameclock):
     """
     Float to minute:second
     """
+    print('Running Annotation:gameclock_to_str')
     return '%d:%d%d' % (int(gameclock/60), int((gameclock % 60)/10), int((gameclock % 60) % 10))
 
 
 def read_annotation(fpath):
+    print('Running Annotation:read_annotation')
     df = pd.read_csv(open(fpath,'rb'), header=None)
     annotations = {}
     for ind, row in df.iterrows():
@@ -69,6 +71,7 @@ def read_annotation(fpath):
 
 
 def read_annotation_from_raw(fpath, game_id):
+    print('Running Annotation:read_annotation_from_raw')
     data = pkl.load(open(fpath, 'rb'))
     annotations = {}
     data = pd.DataFrame(data)
@@ -85,6 +88,7 @@ def read_annotation_from_raw(fpath, game_id):
 
 
 def prepare_gt_file_from_raw_label_dir(pnr_dir, game_dir):
+    print('Running Annotation:prepare_gt_file_from_raw_label_dir')
     gt = []
     all_raw_f = filter(lambda s:'raw-' in s,os.listdir(pnr_dir))
     for pnr_anno_ind in xrange(len(all_raw_f)):
@@ -108,6 +112,7 @@ def prepare_gt_file_from_raw_label_dir(pnr_dir, game_dir):
 
 
 def script_anno_rev0():
+    print('Running Annotation:script_anno_rev0')
     gt = prepare_gt_file_from_raw_label_dir(pnr_dir, game_dir)
     pkl.dump(gt, open(os.path.join(pnr_dir,'gt/rev0.pkl'),'wb'))
     annotations = pd.DataFrame(gt)
@@ -119,6 +124,7 @@ def get_annotation_movement():
     Segment actions of players before and after the screen time as actions
     Get the movement of individual actions for post processing for trajectory2vec
     """
+    print('Running Annotation:get_annotation_movement')
     annotations = pd.read_csv(os.path.join(pnr_dir, 'roles/annotations.csv'))
     game_ids = annotations.loc[:,'gameid'].drop_duplicates(inplace=False).values
 
@@ -159,6 +165,7 @@ def annotate_roles():
     - screen-setter
     - screen-defender
     """
+    print('Running Annotation:annotate_roles')
     annotations_with_roles = pd.DataFrame()
 
     if not os.path.exists('%s/roles/' % pnr_dir):
@@ -198,6 +205,7 @@ def raw_to_gt_format():
     Read raw annotation files to convert to output similar to the output from make_raw_from_untrained
     Use for future comparison purposes
     """
+    print('Running Annotation:raw_to_gt_format')
     if not os.path.exists('%s/raw/' % pnr_dir):
         os.makedirs('%s/raw/' % pnr_dir)
 
@@ -209,6 +217,7 @@ def raw_to_gt_format():
 
 
 if __name__ == '__main__':
+    print('Running Annotation:annotation--main')
     arguments = docopt(__doc__)
     print ("...Docopt... ")
     print(arguments)

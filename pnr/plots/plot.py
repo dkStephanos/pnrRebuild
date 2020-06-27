@@ -23,7 +23,7 @@ movement_headers = [
 def plot_action(game, annotation, game_id, data_config):
     """
     """
-
+    print('Running plot_action')
     moments = []
     movement_data = game['events'][int(annotation['eid'])]['moments']
     for moment in movement_data:
@@ -84,6 +84,7 @@ def plot_action(game, annotation, game_id, data_config):
 
 
 def draw_half_court(ax=None, color='black', lw=2, outer_lines=False):
+    print('Running draw_half_court')
     # If an axes object isn't provided to plot onto, just get current one
     if ax is None:
         ax = plt.gca()
@@ -153,7 +154,7 @@ def draw_half_court(ax=None, color='black', lw=2, outer_lines=False):
 
 
 def half_full_to_half(data):
-
+    print('Running half_full_to_half')
     # convert to half court scale
     # note the x_loc and the y_loc are switched in shot charts from movement data (charts are perpendicular)
     data['x_loc_copy'] = data['x_loc']
@@ -171,7 +172,7 @@ def half_full_to_half(data):
 
 
 def full_to_half_full(data):
-
+    print('Running full_to_half_full')
     # first force all points above 47 to their half court counterparts
     data.loc[data.x_loc > 47,'y_loc'] = data.loc[data.x_loc > 47, 'y_loc'].apply(lambda y: 50 - y)
     data.loc[data.x_loc > 47,'x_loc'] = data.loc[data.x_loc > 47, 'x_loc'].apply(lambda x: 94 - x)

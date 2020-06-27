@@ -8,6 +8,7 @@ def get_player_movement(annotation, movement, player_id, data_config):
     """
     Return before and after movement for single player
     """
+    print('Running Annotation:get_player_movement')
     player_movement = movement.loc[movement.player_id == player_id, :]
     before_movement = player_movement.loc[
                       (player_movement.game_clock <= annotation['gameclock'] + 0.6 + int(
@@ -52,6 +53,7 @@ def get_action_movement(movement, annotation, data_config):
     action_movements: dict
         before and after action movement information
     """
+    print('Running Annotation:get_action_movement')
     action_movements = {}
     action_movements['annotation'] = annotation
     action_movements['players'] = []
@@ -100,6 +102,7 @@ def get_actions(annotation, movement, data_config):
     action_movements: dict
         before and after action movement information for annotation
     """
+    print('Running Annotation:get_actions')
     from pnr.data.constant import game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

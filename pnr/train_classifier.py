@@ -33,6 +33,7 @@ import yaml
 import numpy as np
 
 def train(data_config, model_config, exp_name, fold_index, init_lr, max_iter, best_acc_delay):
+    print('Running Train_Classifier:train')
     # Initialize dataset/loader
     dataset = BaseDataset(data_config, fold_index, load_raw=False, no_anno=True)
     extractor = BaseExtractor(data_config)
@@ -196,6 +197,7 @@ def train(data_config, model_config, exp_name, fold_index, init_lr, max_iter, be
 
 
 if __name__ == '__main__':
+    print('Running Train_Classifier:main')
     arguments = docopt(__doc__)
     print ("...Docopt... ")
     print(arguments)

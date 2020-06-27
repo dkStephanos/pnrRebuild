@@ -7,6 +7,7 @@ def get_possession_team(player, movement):
     """
     Return the team_id of the ball_handler
     """
+    print('Running Annotation:get_possession_team')
     team_id = movement.loc[movement.player_id == player, 'team_id'].values[0]
     return team_id
 
@@ -27,6 +28,7 @@ def get_ball_handler(movement):
     distance: np.array
         difference in locations to use to find ball handler
     """
+    print('Running Annotation:get_ball_handler')
     movement['distance_to_ball'] = 0
     ball_movement = movement.loc[movement.player_id == -1, :]
     players_movement = movement.loc[movement.player_id != -1, :]
@@ -75,6 +77,7 @@ def get_screen_setter(ball_handler, ball_handler_team, movement, annotation):
     screen_setter: int
         player id
     """
+    print('Running Annotation:get_screen_setter')
     # get closest time to screen annotation time
     game_clocks = movement['game_clock'].drop_duplicates(inplace=False).values
     game_clock = game_clocks[np.argmin(np.abs(game_clocks - (annotation['gameclock'] + 0.6)))]
@@ -126,6 +129,7 @@ def get_ball_defender(ball_handler, ball_handler_team, movement):
     distance: np.array
         difference in locations to use to find ball handler
     """
+    print('Running Annotation:get_ball_defender')
     movement['distance_to_ball'] = 0
     ball_handler_movement = movement.loc[movement.player_id == ball_handler, :]
     players_movement = movement.loc[
@@ -173,6 +177,7 @@ def get_screen_defender(screen_setter, ball_defender, screen_setter_team, moveme
     distance: np.array
         difference in locations to use to find ball handler
     """
+    print('Running Annotation:get_screen_defender')
     movement['distance_to_ball'] = 0
     screen_setter_movement = movement.loc[movement.player_id == screen_setter, :]
     players_movement = movement.loc[
@@ -217,6 +222,7 @@ def get_roles(annotation, movement, data_config):
     data_config: dict
         configuration information
     """
+    print('Running Annotation:get_roles')
     annotation_movement = movement.loc[
         (movement.game_clock <= (annotation['gameclock'] + 0.6)) &
         (movement.game_clock >= (annotation['gameclock'] + 0.6 - int(data_config['data_config']['tfr']/data_config['data_config']['frame_rate'])))

@@ -9,6 +9,7 @@ class Seq2Seq:
     """
 
     def __init__(self, config):
+        print('Running Seq2Seq:init')
         self.config = config
         self.input_length = self.config['input_length']
         self.batch_size = self.config['batch_size']
@@ -21,7 +22,7 @@ class Seq2Seq:
         return prev
 
     def build(self):
-
+        print('Running Seq2Seq:build')
         # the sequences, has n steps of maximum size
         seq_input = tf.placeholder(tf.float32, [self.input_length, self.batch_size, self.feature_size], name='seq_input')
         # what timesteps we want to stop at, notice it's different for each batch hence dimension of [batch]
@@ -62,6 +63,7 @@ class Seq2Seq:
         self.x = seq_input
 
     def input(self, x):
+        print('Running Seq2Seq:input')
         x = self.transpose(x)
         ret_dict = {}
         ret_dict[self.x] = x
@@ -69,5 +71,6 @@ class Seq2Seq:
         return ret_dict
 
     def transpose(self, x):
+        print('Running Seq2Seq:transpose')
         x = np.transpose(x, (1, 0, 2))
         return x

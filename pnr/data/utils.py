@@ -17,6 +17,7 @@ HEADERS = {
 }
 
 def shuffle_2_array(x, y):
+    print('Running DataUtils:shuffle_2_array')
     randomize = np.arange(len(x))
     np.random.shuffle(randomize)
     x = x[randomize]
@@ -25,6 +26,7 @@ def shuffle_2_array(x, y):
 
 
 def limit_to_half(movement, screen_loc):
+    print('Running DataUtils:limit_to_half')
     """
     limit movement of player to single side of court where the hoop is for the pnr
     """
@@ -43,6 +45,7 @@ def limit_to_half(movement, screen_loc):
     return movement
 
 def get_hoop_location(ball_loc_x):
+    print('Running DataUtils:get_hoop_location')
     """
     Use hard logic to determine which half of court hoop is in.
     """
@@ -57,6 +60,7 @@ def get_hoop_location(ball_loc_x):
 
 
 def scale_last_dim(s, d1_range=100,d2_range=50,upscale=False):
+    print('Running DataUtils:scale_last_dim')
     if upscale:
         d1_range = 1/d1_range
         d2_range = 1/d2_range
@@ -65,6 +69,7 @@ def scale_last_dim(s, d1_range=100,d2_range=50,upscale=False):
     return s
 
 def create_circle(radius):
+    print('Running DataUtils:create_circle')
     r_squared = np.arange(-radius, radius + 1)**2
     dist_to = r_squared[:, None] + r_squared
     # ones_circle = (dist_to <= radius**2).astype('float32')
@@ -79,6 +84,7 @@ def pictorialize(xx, sample_rate=1, Y_RANGE=100, X_RANGE=50, radius=3):
     return: shape (..., Y_RANGE, X_RANGE) one hot encoded pictures
     WARNING: should really try to vectorize ***
     """
+    print('Running DataUtils:pictorialize')
     # some preprocessing to make sure data is within range
     xx[:, 0][xx[:, 0] >= Y_RANGE] = Y_RANGE - 1
     xx[:, 1][xx[:, 1] >= X_RANGE] = X_RANGE - 1
@@ -130,6 +136,7 @@ def pictorialize_team(xx, sample_rate=1, Y_RANGE=100, X_RANGE=50, radius=0):
 
 
 def make_3teams_11players(sequence):
+    print('Running DataUtils:make_3teams')
     ret = []
     for team in sequence:
         for player in team:
@@ -142,6 +149,7 @@ def pictorialize_fast(xx, sample_rate=1, Y_RANGE=100, X_RANGE=50, keep_channels=
     xx of shape (Batch, Players=11, Time, 2)
     return: shape (Batch, Teams=3, Time, Y_RANGE, X_RANGE) one hot encoded pictures
     """
+    print('Running DataUtils:pictorialize_fast')
     old_shape = list(xx.shape)
     assert (old_shape[1] == 11 and
             old_shape[-1] == 2 and
@@ -185,6 +193,7 @@ def pictorialize_fast_pnr(xx, sample_rate=1, Y_RANGE=100, X_RANGE=50, keep_chann
     input: xx of shape (Batch, Players=5, Time, 2)
     return: shape (Batch, Players=5, Time, Y_RANGE, X_RANGE) one hot encoded pictures
     """
+    print('Running DataUtils:pictorialize_fast_pnr')
     old_shape = list(xx.shape)
 
     assert (old_shape[1] == 5 and
@@ -254,7 +263,7 @@ def make_reference(x, crop_size, ref_type):
             bmf: Ball-Mid-Frame, normalize by where the ball is at mid-frame
             tb:  Track-Ball, normalize by where the ball is at each frame
     """
-
+    print('Running DataUtils:make_reference')
     assert(crop_size[0] % 2 == 1 and crop_size[1] % 2 == 1)
     # x.shape = (N, 11, T, 2)
     if ref_type == 'bmf':
@@ -285,7 +294,7 @@ def make_reference_pnr(x, crop_size, ref_type):
             bmf: Ball-Mid-Frame, normalize by where the ball is at mid-frame
             tb:  Track-Ball, normalize by where the ball is at each frame
     """
-
+    print('Running DataUtils:make_reference_pnr')
     assert(crop_size[0] % 2 == 1 and crop_size[1] % 2 == 1)
     # x.shape = (N, 5, T, 2)
     if ref_type == 'bmf':
@@ -314,6 +323,7 @@ def get_game_info(game_id):
     """
     Get standard game information from api call
     """
+    print('Running DataUtils:get_game_info')
     url = 'http://stats.nba.com/stats/boxscoresummaryv2?GameID=%s' % (game_id)
     response = requests.get(url, headers=HEADERS)
     while response.status_code != 200:
