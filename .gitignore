@@ -13,3 +13,4 @@ pnr.egg-info/**
 **/saves*/**
 *.py~
 **/plots/**
+.vs/*
