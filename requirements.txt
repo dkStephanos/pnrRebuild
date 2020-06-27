@@ -22,7 +22,7 @@ pytz==2018.3
 PyYAML==3.12
 six==1.11.0
 subprocess32==3.2.7
-tensorflow-gpu==1.4.1
+tensorflow-gpu==1.15.2
 tensorflow-tensorboard==0.4.0
 tqdm==4.19.5
 Werkzeug==0.14.1
