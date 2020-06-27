@@ -27,6 +27,7 @@ import numpy as np
 
 
 def wrapper_render_one_game(index, dir_prefix, gameid=None):
+    print('Running Scripts::Make_One_Game_Topics:wrapper_render_one_game')
     ### Load game
     print ('Loading')
     if gameid != None:
@@ -76,6 +77,7 @@ def render_one_game(raw_data, directory, skip_these):
     Input:
         raw_data: the huge dictionary of a single game
     """
+    print('Running Scripts::Make_One_Game_Topics:render_one_game')
     N = len(raw_data['events'])
     pnr_annotations = annotation.read_annotation_from_raw(os.path.join(pnr_dir, 'roles/%s' % (arguments['<raw_file>'])), raw_data['gameid'])
 
@@ -118,6 +120,7 @@ def render_one_game(raw_data, directory, skip_these):
 
 
 if __name__ == '__main__':
+    print('Running Scripts::Make_One_Game_Topics:main')
     game_dir = data.constant.game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 

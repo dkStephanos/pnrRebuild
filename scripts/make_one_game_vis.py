@@ -30,7 +30,7 @@ import pandas as pd
 
 game_dir = data.constant.game_dir
 pnr_dir = os.path.join(game_dir, 'pnr-annotations')
-
+print('Running Scripts::Make_One_Game_Vis')
 
 arguments = docopt(__doc__, version='something 1.1.1')
 print ("...Docopt... ")
@@ -38,6 +38,7 @@ print(arguments)
 print ("............\n")
 
 def wrapper_render_one_game(index, dir_prefix, gameid=None):
+    print('Running Scripts::Make_One_Game_Vis:wrapper_render_one_game')
     ### Load game
     print ('Loading')
     if gameid != None:
@@ -81,6 +82,7 @@ def wrapper_render_one_game(index, dir_prefix, gameid=None):
 
 
 def render_one_game(raw_data, directory, skip_these):
+    print('Running Scripts::Make_One_Game_Vis:render_one_game')
     """
     Input:
         raw_data: the huge dictionary of a single game

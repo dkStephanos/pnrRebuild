@@ -26,6 +26,7 @@ import pandas as pd
 
 
 def wrapper_render_one_anno(dir_prefix, gameid, anno_id):
+    print('Running Scripts::Make_One_Annotation:wrapper_render_one_anno')
     ### Load game
     print ('Loading')
     game_basename = gameid+'.pkl'
@@ -69,6 +70,7 @@ def render_one_anno(raw_data, directory, anno_id):
     Input:
         raw_data: the huge dictionary of a single game
     """
+    print('Running Scripts::Make_One_Annotation:render_one_anno')
     N = len(raw_data['events'])
     anno_id = int(anno_id)
     pnr_annotations = annotation.read_annotation_from_raw(os.path.join(pnr_dir, 'roles/%s' % (arguments['<raw_file>'])), raw_data['gameid'])
@@ -91,6 +93,7 @@ def render_one_anno(raw_data, directory, anno_id):
 
 
 if __name__ == '__main__':
+    print('Running Scripts::Make_One_Annotation:main')
     game_dir = data.constant.game_dir
     pnr_dir = os.path.join(game_dir, 'pnr-annotations')
 
