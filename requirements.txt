@@ -25,4 +25,4 @@ subprocess32==3.2.7
 tensorflow-gpu==1.4.1
 tensorflow-tensorboard==0.4.0
 tqdm==4.19.5
-Werkzeug==0.14.1
+Werkzeug==0.15.5
